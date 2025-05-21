@@ -15,8 +15,15 @@ Console.WriteLine("Please, choose an option: ");
 Console.WriteLine(theMeaningOfLife);
 
 // This method receives user-input in the console and stores it in the variable
-string response = Console.ReadLine();
+string response = Console.ReadLine().Trim();
 
-// $ allows for string interpolation 
+// A while loop's function body will execute only when the parameter evaluates to true
+while (string.IsNullOrWhiteSpace(response))
+// IsNullOrEmpty does not account for whitespace
+{
+    Console.WriteLine("You made no choice!");
+    response = Console.ReadLine().Trim();
+}
+
 Console.WriteLine($@"You chose: {response}
 Thank you for your input!");
