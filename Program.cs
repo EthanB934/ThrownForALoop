@@ -9,20 +9,44 @@ Your one-stop shop for used sporting equipment";
 
 // ;'s are necessary at the end of lines as if complete thoughts
 Console.WriteLine(greeting);
+Console.WriteLine(theMeaningOfLife);
+
+// Initialize a new instance of a list of integers (verbose)
+List<int> years = new List<int>()
+{
+    512,
+    561,
+    956,
+    410,
+    1028
+};
+
+// Initializes a new instance of a list of strings (simplified)
+List<string> sportsGear =
+[
+    "Football",
+    "Hockey Stick",
+    "Boomerang",
+    "Frisbee",
+    "Golf Putter"
+];
 
 Console.WriteLine("Please, choose an option: ");
 
-Console.WriteLine(theMeaningOfLife);
+for (int i = 0; i < sportsGear.Count; i++)
+{
+    Console.WriteLine($"{i + 1}. {sportsGear[i]}");
+}
 
 // This method receives user-input in the console and stores it in the variable
-string response = Console.ReadLine().Trim();
+int response = int.Parse(Console.ReadLine().Trim());
 
 // A while loop's function body will execute only when the parameter evaluates to true
-while (string.IsNullOrWhiteSpace(response))
+while (response > 5 || response < 1)
 // IsNullOrEmpty does not account for whitespace
 {
-    Console.WriteLine("You made no choice!");
-    response = Console.ReadLine().Trim();
+    Console.WriteLine("Please, choose a number between 1 and 5");
+    response = int.Parse(Console.ReadLine().Trim());
 }
 
 Console.WriteLine($@"You chose: {response}
