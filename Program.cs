@@ -49,5 +49,5 @@ while (response > 5 || response < 1)
     response = int.Parse(Console.ReadLine().Trim());
 }
 
-Console.WriteLine($@"You chose: {response}
+Console.WriteLine($@"You chose: {sportsGear[response - 1]}
 Thank you for your input!");
