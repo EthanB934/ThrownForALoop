@@ -11,12 +11,42 @@ string theMeaningOfLife = "forty-two";
 string greeting = @"Welcome to Thrown for a Loop!
 Your one-stop shop for used sporting equipment";
 
+
 // ;'s are necessary at the end of lines as if complete thoughts
 Console.WriteLine(greeting);
 Console.WriteLine(theMeaningOfLife);
 
-// Initialize a new instance of a list of integers (verbose)
-List<int> years = new List<int>()
+string choice = null;
+while (choice != "0" && choice != "1")
+{
+    Console.WriteLine(@"
+    
+    Choose an option...
+    0. Exit
+    1. View Product Details
+
+    ");
+
+    choice = Console.ReadLine().Trim();
+
+    if (choice == "0")
+
+    {
+        Console.WriteLine("Goodbye!");
+    }
+
+    else
+
+    {
+        choice = null;
+        ViewProductDetails();
+    }
+}
+
+void ViewProductDetails()
+{
+    // Initialize a new instance of a list of integers (verbose)
+    List<int> years = new List<int>()
 {
     512,
     561,
@@ -25,17 +55,17 @@ List<int> years = new List<int>()
     1028
 };
 
-// Initializes a new instance of a list of strings (simplified)
-// List<string> sportsGear =
-// [
-//     "Football",
-//     "Hockey Stick",
-//     "Boomerang",
-//     "Frisbee",
-//     "Golf Putter"
-// ];
+    // Initializes a new instance of a list of strings (simplified)
+    // List<string> sportsGear =
+    // [
+    //     "Football",
+    //     "Hockey Stick",
+    //     "Boomerang",
+    //     "Frisbee",
+    //     "Golf Putter"
+    // ];
 
-List<Product> sportsGear = new List<Product>()
+    List<Product> sportsGear = new List<Product>()
 {
     new Product()
     {
@@ -85,94 +115,93 @@ List<Product> sportsGear = new List<Product>()
 };
 
 
-List<Product> availableProducts = new List<Product>()
-{
-
-};
-
-for (int i = 0; i < sportsGear.Count; i++)
-{
-    if (sportsGear[i].Sold == true)
-    {
-        continue;
-    }
-    else
-    {
-        availableProducts.Add(sportsGear[i]);
-    }
-
-}
-
-Product chosenProduct = null;
-
-while (chosenProduct == null)
-{
-    int counter = 0;
-    Console.WriteLine("Please, choose an option: ");
-    for (int i = 0; i < availableProducts.Count; i++)
-    {
-        counter++;
-        Console.WriteLine($"{i + 1}. ${availableProducts[i].Price} {sportsGear[i].Name}");
-    }
-    try
+    List<Product> availableProducts = new List<Product>()
     {
 
+    };
+
+    for (int i = 0; i < sportsGear.Count; i++)
+    {
+        if (sportsGear[i].Sold == true)
         {
-            Console.WriteLine($"Choose an option...");
-            int response = int.Parse(Console.ReadLine().Trim());
-            chosenProduct = availableProducts[response - 1];
+            continue;
         }
+        else
+        {
+            availableProducts.Add(sportsGear[i]);
+        }
+
     }
-    catch (ArgumentOutOfRangeException)
+
+    Product chosenProduct = null;
+
+    while (chosenProduct == null)
     {
-        Console.WriteLine($@"
+        int counter = 0;
+        for (int i = 0; i < availableProducts.Count; i++)
+        {
+            counter++;
+            Console.WriteLine($"{i + 1}. ${availableProducts[i].Price} {availableProducts[i].Name}");
+        }
+        try
+        {
+
+            {
+                Console.WriteLine($"Choose an option...");
+                int response = int.Parse(Console.ReadLine().Trim());
+                chosenProduct = availableProducts[response - 1];
+            }
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.WriteLine($@"
         
         Select a number from 1 to {counter}
 
         ");
-    }
-    catch (FormatException)
-    {
-        Console.WriteLine(@"
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine(@"
 
         The input must be a number!
 
         ");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($@"
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($@"
 
             {ex}
         Do better!!!
-        
+
         ");
+        }
+
     }
 
-}
+    decimal availableProductsTotalCost = 0.0M;
 
-decimal availableProductsTotalCost = 0.0M;
+    foreach (var product in availableProducts)
+    {
+        availableProductsTotalCost += product.Price;
 
-foreach (var product in availableProducts)
-{
-    availableProductsTotalCost += product.Price;
+    }
 
-}
+    DateTime now = DateTime.Now;
 
-// A while loop's function body will execute only when the parameter evaluates to true
+    TimeSpan timeInStock = now - chosenProduct.StockDate;
 
-// Gives the date and time when the program runs
-DateTime now = DateTime.Now;
-
-// The result of an expression involving date and time is a time span. 
-TimeSpan timeInStock = now - chosenProduct.StockDate;
-
-Console.WriteLine(
-// TimeSpan types have the Day's property which just returns the Day value of the date time. 
-    $@"
-    You chose: {chosenProduct.Name}
-    Time in stock: {timeInStock.Days} Days
-    Throw For a Loop's Condition Rating: {chosenProduct.Condition}
-
-    Total Stock Cost ---------- ${availableProductsTotalCost} ---------- 
+    Console.WriteLine(
+        $@"
+    Product:          ------------ {chosenProduct.Name}
+    Time in stock:    ------------ {timeInStock.Days} Days
+    Condition:        ------------ {chosenProduct.Condition}
+    Cost:             ------------ S{chosenProduct.Price}
+    Total Stock Cost: ------------ ${availableProductsTotalCost}
     ");
+
+    Console.WriteLine("Press the enter key to continue...");
+    Console.ReadLine();
+}
+
