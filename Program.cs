@@ -40,42 +40,47 @@ List<Product> sportsGear = new List<Product>()
     new Product()
     {
         Name = "Football",
-        Price = 15,
+        Price = 8.99M,
         Sold = false,
         StockDate = new DateTime(2025, 05, 1),
-        ManufactureYear = 2025
+        ManufactureYear = 2025,
+        Condition = 2.32
     },
     new Product()
     {
         Name = "Hockey Stick",
-        Price = 25,
+        Price = 12.25M,
         Sold = true,
         StockDate = new DateTime(2024, 12, 31),
-        ManufactureYear = 2015
+        ManufactureYear = 2015,
+        Condition = 1.10
     },
     new Product()
     {
         Name = "Boomerang",
-        Price = 19,
+        Price = 30.10M,
         Sold = false,
         StockDate = new DateTime(2025, 02, 14),
-        ManufactureYear = 2000
+        ManufactureYear = 2000,
+        Condition = 3.88
     },
     new Product()
     {
         Name = "Frisbee",
-        Price = 2,
-        Sold = true,
+        Price = 1.80M,
+        Sold = false,
         StockDate = new DateTime(2025, 05, 26),
-        ManufactureYear = 2025
+        ManufactureYear = 2025,
+        Condition = 5.00
     },
     new Product()
     {
         Name = "Golf Putter",
-        Price = 50,
-        Sold = true,
+        Price = 150.99M,
+        Sold = false,
         StockDate = new DateTime(2022, 10, 20),
-        ManufactureYear = 1982
+        ManufactureYear = 1982,
+        Condition = 4.84
     }
 };
 
@@ -101,17 +106,24 @@ for (int i = 0; i < sportsGear.Count; i++)
 }
 
 
-
 for (int i = 0; i < availableProducts.Count; i++)
 {
     counter++;
     Console.WriteLine($"{i + 1}. ${availableProducts[i].Price} {sportsGear[i].Name}");
 }
+
+decimal availableProductsTotalCost = 0.0M;
+
+foreach (var product in availableProducts)
+{
+    availableProductsTotalCost += product.Price;
+
+}
 // This method receives user-input in the console and stores it in the variable
 int response = int.Parse(Console.ReadLine().Trim());
 
 // A while loop's function body will execute only when the parameter evaluates to true
-while (response > counter || response < 0)
+while (response > counter || response <= 0)
 // IsNullOrEmpty does not account for whitespace
 {
     Console.WriteLine($"Please, choose a number between 1 and {counter}");
@@ -129,4 +141,7 @@ Console.WriteLine(
     $@"
     You chose: {sportsGear[response - 1].Name}
     Time in stock: {timeInStock.Days} Days
+    Throw For a Loop's Condition Rating: {sportsGear[response - 1].Condition}
+
+    Total Stock Cost ---------- ${availableProductsTotalCost} ---------- 
     ");
