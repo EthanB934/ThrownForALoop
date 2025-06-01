@@ -84,9 +84,7 @@ List<Product> sportsGear = new List<Product>()
     }
 };
 
-Console.WriteLine("Please, choose an option: ");
 
-int counter = 0;
 List<Product> availableProducts = new List<Product>()
 {
 
@@ -105,11 +103,52 @@ for (int i = 0; i < sportsGear.Count; i++)
 
 }
 
+Product chosenProduct = null;
 
-for (int i = 0; i < availableProducts.Count; i++)
+while (chosenProduct == null)
 {
-    counter++;
-    Console.WriteLine($"{i + 1}. ${availableProducts[i].Price} {sportsGear[i].Name}");
+    int counter = 0;
+    Console.WriteLine("Please, choose an option: ");
+    for (int i = 0; i < availableProducts.Count; i++)
+    {
+        counter++;
+        Console.WriteLine($"{i + 1}. ${availableProducts[i].Price} {sportsGear[i].Name}");
+    }
+    try
+    {
+
+        {
+            Console.WriteLine($"Choose an option...");
+            int response = int.Parse(Console.ReadLine().Trim());
+            chosenProduct = availableProducts[response - 1];
+        }
+    }
+    catch (ArgumentOutOfRangeException)
+    {
+        Console.WriteLine($@"
+        
+        Select a number from 1 to {counter}
+
+        ");
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine(@"
+
+        The input must be a number!
+
+        ");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($@"
+
+            {ex}
+        Do better!!!
+        
+        ");
+    }
+
 }
 
 decimal availableProductsTotalCost = 0.0M;
@@ -119,29 +158,21 @@ foreach (var product in availableProducts)
     availableProductsTotalCost += product.Price;
 
 }
-// This method receives user-input in the console and stores it in the variable
-int response = int.Parse(Console.ReadLine().Trim());
 
 // A while loop's function body will execute only when the parameter evaluates to true
-while (response > counter || response <= 0)
-// IsNullOrEmpty does not account for whitespace
-{
-    Console.WriteLine($"Please, choose a number between 1 and {counter}");
-    response = int.Parse(Console.ReadLine().Trim());
-}
 
 // Gives the date and time when the program runs
 DateTime now = DateTime.Now;
 
 // The result of an expression involving date and time is a time span. 
-TimeSpan timeInStock = now - sportsGear[response - 1].StockDate;
+TimeSpan timeInStock = now - chosenProduct.StockDate;
 
 Console.WriteLine(
 // TimeSpan types have the Day's property which just returns the Day value of the date time. 
     $@"
-    You chose: {sportsGear[response - 1].Name}
+    You chose: {chosenProduct.Name}
     Time in stock: {timeInStock.Days} Days
-    Throw For a Loop's Condition Rating: {sportsGear[response - 1].Condition}
+    Throw For a Loop's Condition Rating: {chosenProduct.Condition}
 
     Total Stock Cost ---------- ${availableProductsTotalCost} ---------- 
     ");
